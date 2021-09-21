@@ -9,7 +9,7 @@ async function sendMail(recipient, message) {
     },
     auth: {
       user: "appcheck.kyc@gmail.com",
-      pass: "squbix1122",
+      pass: process.env.MAILER_PASSWORD,
     },
   });
 

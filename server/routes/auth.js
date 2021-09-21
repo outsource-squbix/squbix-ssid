@@ -24,7 +24,27 @@ router.post(
     }),
   ],
   async (req, res) => {
-    const { password, email, first_name, last_name } = req.body;
+    const requiredFields = [
+      "password",
+      "email",
+      "first_name",
+      "last_name",
+      "role", // The roles are holder, issuer, verifier
+    ];
+
+    //checking if the required fields are present in the request body
+    for (const field of requiredFields) {
+      if (!req.body.hasOwnProperty(field))
+        return res.status(400).json({
+          errors: [
+            {
+              msg: "Invalid Fields",
+            },
+          ],
+        });
+    }
+
+    const { password, email, first_name, last_name, role } = req.body;
 
     // Validating the input
     const errors = validationResult(req);
@@ -63,6 +83,7 @@ router.post(
       uid,
       firstName: first_name,
       lastName: last_name,
+      role,
     });
 
     await newUser.save();
