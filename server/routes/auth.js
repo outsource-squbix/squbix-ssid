@@ -91,6 +91,8 @@ router.post(
     const token = await JWT.sign(
       {
         uid,
+        email,
+        role,
       },
       process.env.JWT_SECRET_KEY,
       {
@@ -110,7 +112,7 @@ router.post(
 router.post("/login", async (req, res) => {
   const { password, email } = req.body;
 
-  let user = await User.findOne({ email: email }).exec();
+  const user = await User.findOne({ email: email }).exec();
 
   if (!user) {
     return res.status(400).json({
@@ -121,6 +123,9 @@ router.post("/login", async (req, res) => {
       ],
     });
   }
+
+  const uid = user.uid;
+  const role = user.role;
 
   const isMatch = await bcrypt.compare(password, user.password);
 
@@ -136,7 +141,9 @@ router.post("/login", async (req, res) => {
 
   const token = await JWT.sign(
     {
+      uid,
       email,
+      role,
     },
     process.env.JWT_SECRET_KEY,
     {

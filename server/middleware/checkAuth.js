@@ -16,6 +16,7 @@ module.exports = async (req, res, next) => {
 
   try {
     const user = await JWT.verify(token, process.env.JWT_SECRET_KEY);
+    console.log(user);
     req.user = user.email;
     next();
   } catch (error) {
