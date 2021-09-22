@@ -9,8 +9,15 @@ const post = require("./routes/post");
 const db = require("./utils/db");
 const app = express();
 
-app.use(cors());
 app.use(express.json());
+
+var corsOptions = {
+  origin: "http://localhost:3000",
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
+
 app.use("/auth", auth);
 app.use("/posts", post);
 app.use("/user", user);

@@ -38,10 +38,20 @@ router.post(
         return res.status(400).json({
           errors: [
             {
-              msg: "Invalid Fields",
+              msg: `Missing Field ${field}`,
             },
           ],
         });
+    }
+
+    if (
+      req.body.role != "holder" &&
+      req.body.role != "issuer" &&
+      req.body.role != "verifier"
+    ) {
+      return res.status(400).json({
+        errors: [{ msg: "Invalid Role" }],
+      });
     }
 
     const { password, email, first_name, last_name, role } = req.body;
