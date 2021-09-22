@@ -18,15 +18,12 @@ export const signUp = (
 };
 
 export const login = (email, password) => {
-  return axios
-    .post(AUTH_API_URL + "/login", {
-      email,
-      password,
-    })
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  return axios.post(AUTH_API_URL + "/login", {
+    email,
+    password,
+  });
+};
+
+export const logout = () => {
+  localStorage.removeItem("user");
 };

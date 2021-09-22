@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import NavBar from "./components/Navbar";
 import SignUp from "./screens/SignUp";
@@ -7,9 +8,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 function App() {
+  const [isAuthenticated, getAuthStatus] = useState(
+    localStorage.getItem("user") ? true : false
+  );
+
+  // For dynamic change in navbar we are getting the auth status from the Login child component
+  const setAuthStatus = (value) => {
+    getAuthStatus(value);
+  };
   return (
     <div className="App">
-      <NavBar isAutenticated={false} />
+      <NavBar
+        authenticatedStatus={isAuthenticated}
+        sendAuthStatus={(value) => setAuthStatus(value)}
+      />
       <Switch>
         <Route exact path="/">
           <Home />
@@ -21,7 +33,7 @@ function App() {
           <SignUp />
         </Route>
         <Route exact path="/login">
-          <Login />
+          <Login sendAuthStatus={(value) => setAuthStatus(value)} />
         </Route>
       </Switch>
     </div>

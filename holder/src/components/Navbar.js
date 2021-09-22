@@ -1,6 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
-const NavBar = ({ isAutenticated }) => {
+import { logout } from "../services/authService";
+import { useHistory } from "react-router";
+const NavBar = ({ authenticatedStatus, sendAuthStatus }) => {
+  const history = useHistory();
+  const [authStatus, getAuthStatus] = useState(authenticatedStatus);
+
+  useEffect(() => {
+    getAuthStatus(authenticatedStatus);
+  }, [authenticatedStatus, authStatus]);
+
+  const handleLogOut = () => {
+    logout();
+    sendAuthStatus(false);
+    history.push("/login");
+  };
   return (
     <div>
       {" "}
@@ -8,7 +22,12 @@ const NavBar = ({ isAutenticated }) => {
         <Container>
           <Navbar.Brand href="/home">Holder Portal</Navbar.Brand>
           <Nav className="me-auto">
-            {isAutenticated ? null : (
+            {authenticatedStatus ? (
+              <>
+                <Nav.Link href="/home">Home</Nav.Link>
+                <Nav.Link onClick={handleLogOut}>Logout</Nav.Link>
+              </>
+            ) : (
               <>
                 <Nav.Link href="/home">Home</Nav.Link>
                 <Nav.Link href="/login">Login</Nav.Link>
