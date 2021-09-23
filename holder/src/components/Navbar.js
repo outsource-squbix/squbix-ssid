@@ -25,6 +25,7 @@ const NavBar = ({ authenticatedStatus, sendAuthStatus }) => {
             {authenticatedStatus ? (
               <>
                 <Nav.Link href="/home">Home</Nav.Link>
+                <Nav.Link href="/dashboard">Dashboard</Nav.Link>
                 <Nav.Link onClick={handleLogOut}>Logout</Nav.Link>
               </>
             ) : (

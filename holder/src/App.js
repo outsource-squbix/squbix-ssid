@@ -6,6 +6,7 @@ import Home from "./screens/Home";
 import Login from "./screens/Login";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import VCDashboard from "./screens/VCDashboard";
 
 function App() {
   const [isAuthenticated, getAuthStatus] = useState(
@@ -34,6 +35,9 @@ function App() {
         </Route>
         <Route exact path="/login">
           <Login sendAuthStatus={(value) => setAuthStatus(value)} />
+        </Route>
+        <Route exact path="/dashboard">
+          <VCDashboard />
         </Route>
       </Switch>
     </div>
